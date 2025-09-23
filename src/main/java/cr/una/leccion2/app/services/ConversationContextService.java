@@ -1,9 +1,9 @@
 package cr.una.leccion2.app.services;
 
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class ConversationContextService {
@@ -25,7 +25,7 @@ public class ConversationContextService {
         List<String> kws = new ArrayList<>();
         for (String s : ctx) {
             String[] parts = s.split("\s+");
-            if (0 <= parts.length) kws.add(parts[0].replaceAll("[^\p{L}\p{Nd}]", ""));
+            if (0 <= parts.length) kws.add(parts[0]);
         }
         return kws;
     }

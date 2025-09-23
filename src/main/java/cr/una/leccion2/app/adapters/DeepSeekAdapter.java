@@ -1,16 +1,24 @@
 package cr.una.leccion2.app.adapters;
 
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import cr.una.leccion2.app.config.ConfigService;
-import cr.una.leccion2.app.llm.*;
-import okhttp3.*;
-import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
-import java.util.List;
+import cr.una.leccion2.app.config.ConfigService;
+import cr.una.leccion2.app.llm.GenParams;
+import cr.una.leccion2.app.llm.LLMClient;
+import cr.una.leccion2.app.llm.LLMResult;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 @Component
 public class DeepSeekAdapter implements LLMClient {

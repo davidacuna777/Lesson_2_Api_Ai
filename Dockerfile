@@ -13,4 +13,4 @@ ARG JAR_FILE=/app/target/leccion2-servidor-factory-deepseek-telegram-1.0.0.jar
 ENV HTTP_PORT=8080
 EXPOSE ${HTTP_PORT}
 COPY --from=build ${JAR_FILE} /app/app.jar
-ENTRYPOINT ["java","-Dserver.port=${HTTP_PORT}","-jar","/app/app.jar"]
+ENTRYPOINT ["java","-jar","/app/app.jar"]
