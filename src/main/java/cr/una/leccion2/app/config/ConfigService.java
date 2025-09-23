@@ -16,6 +16,7 @@ public class ConfigService {
     public int httpPort() { return Integer.parseInt(env("HTTP_PORT", "8080")); }
     public int jokeEveryN() { return Integer.parseInt(env("JOKE_EVERY_N_MESSAGES", "3")); }
     public String humorStyle() { return env("HUMOR_STYLE", "friendly"); }
+    public boolean salesCoachUseLlm() { return Boolean.parseBoolean(env("SALES_COACH_USE_LLM", "false")); }
 
     private String env(String key, String def) {
         String v = System.getenv(key);

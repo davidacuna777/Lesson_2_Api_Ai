@@ -3,6 +3,7 @@ package cr.una.leccion2.app.adapters;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import ch.qos.logback.classic.Logger;
 import cr.una.leccion2.app.config.ConfigService;
 import cr.una.leccion2.app.llm.GenParams;
 import cr.una.leccion2.app.llm.LLMClient;
@@ -20,15 +22,20 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+
 @Component
 public class DeepSeekAdapter implements LLMClient {
 
+     private static final Logger log = (Logger) LoggerFactory.getLogger(DeepSeekAdapter.class);
+    private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
     private final ConfigService config;
     private final ObjectMapper mapper = new ObjectMapper();
-    private final OkHttpClient http = new OkHttpClient();
+    private final OkHttpClient http = null;
 
     public DeepSeekAdapter(ConfigService config) {
         this.config = config;
+        
     }
 
     @Override

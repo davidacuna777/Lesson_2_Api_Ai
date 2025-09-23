@@ -44,7 +44,8 @@ public class UseCaseFactory {
         SalesStrategy reject = new RejectReturnStrategy();
         SalesStrategy upsell = new UpsellStrategy();
         SalesStrategy motivate = new MotivatePurchaseStrategy();
-        return new SalesCoach(llm, reject, upsell, motivate, false);
+          boolean refine = config.salesCoachUseLlm();
+        return new SalesCoach(llm, reject, upsell, motivate, refine);
     }
 
     public HumorAgent humorAgent() {
