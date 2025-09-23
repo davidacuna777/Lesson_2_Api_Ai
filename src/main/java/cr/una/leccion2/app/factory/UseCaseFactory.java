@@ -44,7 +44,11 @@ public class UseCaseFactory {
         SalesStrategy reject = new RejectReturnStrategy();
         SalesStrategy upsell = new UpsellStrategy();
         SalesStrategy motivate = new MotivatePurchaseStrategy();
-          boolean refine = config.salesCoachUseLlm();
+        
+        boolean refine = config.salesCoachUseLlm()
+                && "deepseek".equalsIgnoreCase(config.provider())
+                && !config.deepseekApiKey().isBlank();
+
         return new SalesCoach(llm, reject, upsell, motivate, refine);
     }
 
@@ -54,6 +58,6 @@ public class UseCaseFactory {
             case "light" -> new LightJokeStrategy();
             default -> new FriendlyJokeStrategy();
         };
-        return new HumorAgent(strategy, msgCounter, config.jokeEveryN());
+       return new HumorAgent(strategy, msgCounter, ctxService, config.jokeEveryN());
     }
 }

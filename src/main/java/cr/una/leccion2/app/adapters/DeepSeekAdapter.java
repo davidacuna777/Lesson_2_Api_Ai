@@ -26,15 +26,21 @@ import okhttp3.Response;
 @Component
 public class DeepSeekAdapter implements LLMClient {
 
-     private static final Logger log = (Logger) LoggerFactory.getLogger(DeepSeekAdapter.class);
+      private static final Logger log = (Logger) LoggerFactory.getLogger(DeepSeekAdapter.class);
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     private final ConfigService config;
-    private final ObjectMapper mapper = new ObjectMapper();
-    private final OkHttpClient http = null;
+    private final ObjectMapper mapper;
+    private final OkHttpClient http;
 
     public DeepSeekAdapter(ConfigService config) {
+           this(config, new OkHttpClient(), new ObjectMapper());
+    }
+
+    DeepSeekAdapter(ConfigService config, OkHttpClient http, ObjectMapper mapper) {
         this.config = config;
+        this.http = http;
+        this.mapper = mapper;
         
     }
 
@@ -71,20 +77,25 @@ public class DeepSeekAdapter implements LLMClient {
         String baseUrl = config.deepseekBaseUrl();
         String url = baseUrl.endsWith("/") ? baseUrl + "v1/chat/completions" : baseUrl + "/v1/chat/completions";
 
-        RequestBody body = RequestBody.create(root.toString().getBytes(StandardCharsets.UTF_8), MediaType.parse("application/json"));
+        if (config.deepseekApiKey().isBlank()) {
+            log.warn("DeepSeek API key no configurada, devolviendo mensaje local");
+            return new LLMResult("[DeepSeek desactivado: configura DEEPSEEK_API_KEY] " + user, 0, 0);
+        }
+
+        RequestBody body = RequestBody.create(root.toString().getBytes(StandardCharsets.UTF_8), JSON);
+        
         Request req = new Request.Builder()
                 .url(url)
                 .addHeader("Authorization", "Bearer " + config.deepseekApiKey())
                 .addHeader("Content-Type", "application/json")
                 .post(body).build();
 
-        // If no API key configured, short-circuit to a helpful message
-        if (config.deepseekApiKey().isBlank()) {
-            return new LLMResult("[DeepSeek desactivado: configura DEEPSEEK_API_KEY] " + user, 0, 0);
-        }
+        
 
         try (Response resp = http.newCall(req).execute()) {
             if (!resp.isSuccessful()) {
+                String hint = resp.body() != null ? resp.body().string() : "";
+                log.warn("DeepSeek HTTP {}: {}", resp.code(), hint);
                 return new LLMResult("[DeepSeek error HTTP " + resp.code() + "]", 0, 0);
             }
             String json = resp.body() != null ? resp.body().string() : "{}";
