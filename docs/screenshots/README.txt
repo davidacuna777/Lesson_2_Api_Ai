@@ -1,0 +1,1 @@
+Agrega aquí capturas de /health, /version, /chat, /coach y Telegram.
