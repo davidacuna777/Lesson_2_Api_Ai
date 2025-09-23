@@ -14,13 +14,18 @@ public class ConversationContextService {
         return new ArrayList<>(messages.subList(from, messages.size()));
     }
 
+    /**
+     * @param messages
+     * @param n
+     * @return
+     */
     public List<String> extractKeywords(List<String> messages, int n) {
         // naive: take last messages and split first word tokens
         List<String> ctx = lastMessages(messages, n);
         List<String> kws = new ArrayList<>();
         for (String s : ctx) {
             String[] parts = s.split("\s+");
-            if (parts.length > 0) kws.add(parts[0].replaceAll("[^\p{L}\p{Nd}]", ""));
+            if (0 <= parts.length) kws.add(parts[0].replaceAll("[^\p{L}\p{Nd}]", ""));
         }
         return kws;
     }

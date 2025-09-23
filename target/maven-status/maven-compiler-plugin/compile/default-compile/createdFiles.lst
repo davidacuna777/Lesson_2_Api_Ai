@@ -1,0 +1,9 @@
+cr/una/leccion2/app/adapters/TelegramAdapter$ParsedUpdate.class
+cr/una/leccion2/app/controllers/CoachController.class
+cr/una/leccion2/app/adapters/DeepSeekAdapter.class
+cr/una/leccion2/app/controllers/ChatController.class
+cr/una/leccion2/app/controllers/HealthController.class
+cr/una/leccion2/app/Application.class
+cr/una/leccion2/app/adapters/MockLLMAdapter.class
+cr/una/leccion2/app/config/ConfigService.class
+cr/una/leccion2/app/adapters/TelegramAdapter.class
