@@ -23,7 +23,7 @@ import cr.una.leccion2.app.usecases.HumorAgent;
 public class TelegramWebhookController {
 
     private static final Logger log = LoggerFactory.getLogger(TelegramWebhookController.class);
-     private static final String TELEGRAM_SYSTEM_PROMPT =
+       private static final String TELEGRAM_SYSTEM_PROMPT =
             "Eres un asistente cercano y empático. Responde en español usando frases breves y claras.";
     private static final String FALLBACK_REPLY =
             "Ups, no pude responder ahora mismo. Inténtalo de nuevo en unos segundos.";
@@ -48,7 +48,7 @@ public class TelegramWebhookController {
         if (update.chatId == null) {
             return ResponseEntity.ok(Map.of("status", "ignored"));
         }
-        String incoming = update.text == null ? "" : update.text.trim();
+      String incoming = update.text == null ? "" : update.text.trim();
         if (incoming.isEmpty()) {
             return ResponseEntity.ok(Map.of("status", "ignored"));
         }
